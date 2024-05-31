@@ -5,6 +5,8 @@ namespace Lab3
         public addNewForm()
         {
             InitializeComponent();
+
+            controllerInterface = ManageClass.GetControllerInterface();
         }
 
         public static class ExceptionStrings
@@ -68,6 +70,27 @@ namespace Lab3
             return null;
         }
 
+        private void AddButton_Click(object sender, EventArgs e)
+        {
+            ErrorLabel.Text = "";
 
+            try
+            {
+                string name = NameTextBox.Text;
+
+                SaveDirInterface saveDir = clickToArchive(name);
+
+                ErrorLabel.Text = "Создана директория " + saveDir.Name;
+                if (MessageBox.Show("Создана директория " + saveDir.Name, "Внимание!") == DialogResult.OK)
+                {
+                    this.Close();
+                }
+            }
+
+            catch (Exception exception)
+            {
+                ErrorLabel.Text = exception.Message;
+            }
+        }
     }
 }
